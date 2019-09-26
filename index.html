@@ -1,102 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<title></title>
-
-<style>
-	*{
-		margin:0;padding:0;
-	}
-	body{overflow:hidden;}
-	#canvas{
-		background-color:black;
-		width:100%;
-		height:100vh;
-	}
-	h1{
-		margin: 0 auto;
-		margit-top:500px;
-		font-size:40px;
-		z-index:999;
-		color:rgb(255, 217, 0);
-	}
-	
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
+    <style>
+        *{
+            margin:0;padding:0;
+        }
+        body{overflow:hidden;}
+        #canvas{
+            background-color:rgb(73, 73, 73);
+            width:100%;
+            height:100vh;
+            position: relative;
+        }
+        h1{
+            position: absolute;
+            top: 500px;
+            left: 40%;
+            font-size:40px;
+            color:rgb(255, 217, 0);
 
-<canvas id="canvas" >
-<h1>欢迎来到我的世界！</h1>
-	</canvas>	
-	
+        }
+        
+    </style>
+    
+    </head>
+    <body>
+    <canvas id="canvas" >
+    </canvas>	
+    <h1>欢迎来到我的世界！二哈给我发红包</h1>
+    </body>
+    
+    <script>
+    var canvas = document.querySelector('#canvas');
+    var ctx = canvas.getContext("2d");
+    var starlist = [];
+    function init(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    init();
+    window.onresize = init;
+    
+    canvas.addEventListener('mousemove',function(e){
+        starlist.push(new Star(e.offsetX,e.offsetY));
+        console.log(starlist)
+    })
+    
+    function random(min,max){
+        return Math.floor((max-min)*Math.random()+ min);
+    }
+    
+    function Star(x,y){
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random()-0.5)*3;
+        this.vy = (Math.random()-0.5)*3;
+        this.color = 'rgb('+random(0,256)+','+random(0,256)+','+random(0,256)+')';
+        this.a = 1;
+        console.log(this.color);
+        this.draw();
+    }
+    Star.prototype={
+        draw:function(){
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.globalCompositeOperation='lighter'
+            ctx.globalAlpha= this.a;
+            ctx.arc(this.x,this.y,30,0,Math.PI*2,false);
+            ctx.fill();
+            this.updata();
+        },
+        updata(){
+            this.x+=this.vx;
+            this.y+=this.vy;
+            this.a*=0.98;
+        }
+    }
+    console.log(new Star(150,200));
+    function render(){
+        ctx.clearRect(0,0,canvas.width,canvas.height)
+        
+        starlist.forEach((item,i)=>{
+            item.draw();
+            if(item.a<0.05){
+                starlist.splice(i,1);
+            }
+        })
+        
+        requestAnimationFrame(render);
+    }
+    render();	
+    
+    </script>
+    <div style="text-align:center;">
+    
+    </div>
 </body>
-
-<script>
-var canvas = document.querySelector('#canvas');
-var ctx = canvas.getContext("2d");
-var starlist = [];
-function init(){
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-}
-init();
-window.onresize = init;
-
-canvas.addEventListener('mousemove',function(e){
-	starlist.push(new Star(e.offsetX,e.offsetY));
-	console.log(starlist)
-})
-
-function random(min,max){
-	return Math.floor((max-min)*Math.random()+ min);
-}
-
-function Star(x,y){
-	this.x = x;
-	this.y = y;
-	this.vx = (Math.random()-0.5)*3;
-	this.vy = (Math.random()-0.5)*3;
-	this.color = 'rgb('+random(0,256)+','+random(0,256)+','+random(0,256)+')';
-	this.a = 1;
-	console.log(this.color);
-	this.draw();
-}
-Star.prototype={
-	draw:function(){
-		ctx.beginPath();
-		ctx.fillStyle = this.color;
-		ctx.globalCompositeOperation='lighter'
-		ctx.globalAlpha= this.a;
-		ctx.arc(this.x,this.y,30,0,Math.PI*2,false);
-		ctx.fill();
-		this.updata();
-	},
-	updata(){
-		this.x+=this.vx;
-		this.y+=this.vy;
-		this.a*=0.98;
-	}
-}
-console.log(new Star(150,200));
-function render(){
-	ctx.clearRect(0,0,canvas.width,canvas.height)
-	
-	starlist.forEach((item,i)=>{
-		item.draw();
-		if(item.a<0.05){
-			starlist.splice(i,1);
-		}
-	})
-	
-	requestAnimationFrame(render);
-}
-render();	
-
-</script>
-<div style="text-align:center;">
-
-</div>
-
 </html>
