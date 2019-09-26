@@ -1,105 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <style>
-        *{
-            margin:0;padding:0;
+        * {
+            margin: 0;
+            padding: 0;
         }
-        body{overflow:hidden;}
-        #canvas{
-            background-color:rgb(73, 73, 73);
-            width:100%;
-            height:100vh;
+
+        body {
+            overflow: hidden;
+        }
+
+        #canvas {
+            background-color: rgb(73, 73, 73);
+            width: 100%;
+            height: 100vh;
             position: relative;
         }
-        h1{
+
+        h1 {
             position: absolute;
             top: 500px;
             left: 40%;
-            font-size:40px;
-            color:rgb(255, 217, 0);
+            font-size: 40px;
+            color: rgb(255, 217, 0);
 
+             /***** animation-name:动画名字，设置本元素要执行哪个动画 */
+             animation-name: move;
+            /***** 设置单次动画的持续时间 */
+            animation-duration: 10s;
+            /* 动画状态是否保留，设置为both可以保留动画结束时元素的样式 */
+            animation-fill-mode: both;
+            /***** 设置动画执行速率，默认为ease-in-out，匀速使用linear */
+            animation-timing-function: linear;
+            /* 表示动画延迟时间 */
+            animation-delay: 0s;
+            /* 设置动画方向 */
+            animation-direction: normal;
+            /***** 动画迭代（执行）次数，默认为1，设置infinite表示无限次 */
+            animation-iteration-count: infinite;
+
+            transform-style: preserve-3d;
         }
-        
-    </style>
-    
-    </head>
-    <body>
-    <canvas id="canvas" >
-    </canvas>	
-    <h1>欢迎来到我的世界！二哈给我发红包</h1>
-    </body>
-    
-    <script>
-    var canvas = document.querySelector('#canvas');
-    var ctx = canvas.getContext("2d");
-    var starlist = [];
-    function init(){
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    init();
-    window.onresize = init;
-    
-    canvas.addEventListener('mousemove',function(e){
-        starlist.push(new Star(e.offsetX,e.offsetY));
-        console.log(starlist)
-    })
-    
-    function random(min,max){
-        return Math.floor((max-min)*Math.random()+ min);
-    }
-    
-    function Star(x,y){
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random()-0.5)*3;
-        this.vy = (Math.random()-0.5)*3;
-        this.color = 'rgb('+random(0,256)+','+random(0,256)+','+random(0,256)+')';
-        this.a = 1;
-        console.log(this.color);
-        this.draw();
-    }
-    Star.prototype={
-        draw:function(){
-            ctx.beginPath();
-            ctx.fillStyle = this.color;
-            ctx.globalCompositeOperation='lighter'
-            ctx.globalAlpha= this.a;
-            ctx.arc(this.x,this.y,30,0,Math.PI*2,false);
-            ctx.fill();
-            this.updata();
-        },
-        updata(){
-            this.x+=this.vx;
-            this.y+=this.vy;
-            this.a*=0.98;
-        }
-    }
-    console.log(new Star(150,200));
-    function render(){
-        ctx.clearRect(0,0,canvas.width,canvas.height)
-        
-        starlist.forEach((item,i)=>{
-            item.draw();
-            if(item.a<0.05){
-                starlist.splice(i,1);
+
+        @keyframes move {
+
+            /* 0%表示动画开始的关键帧 */
+            0% {
+                background-color: salmon;
+                transform: translateZ(150px);
+                transform: translateY(150px);
+                transform-style: preserve-3d;
+                top:0px;
             }
+
+            10% {
+                background-color: rgb(241, 250, 114);
+                transform: translateZ(250px);
+                transform: translateY(100px);
+                transform-style: preserve-3d;
+            }
+            20% {
+                background-color: rgb(241, 250, 114);
+                transform: translateZ(250px);
+                transform: translateY(100px);
+                transform-style: preserve-3d;
+            }
+
+            /* 100%表示动画结束时的关键帧 */
+            100% {
+                background-color: rgb(6, 248, 87);
+                transform: translateZ(150px);
+                transform: translateY(150px);
+                transform-style: preserve-3d;
+            }
+        }
+    </style>
+
+    </head>
+
+    <body>
+        <canvas id="canvas">
+        </canvas>
+        <h1>欢迎来到我的世界！</h1>
+    </body>
+
+
+
+    <script>
+        var canvas = document.querySelector('#canvas');
+        var ctx = canvas.getContext("2d");
+        var starlist = [];
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        init();
+        window.onresize = init;
+
+        canvas.addEventListener('mousemove', function (e) {
+            starlist.push(new Star(e.offsetX, e.offsetY));
+            console.log(starlist)
         })
-        
-        requestAnimationFrame(render);
-    }
-    render();	
-    
+
+        function random(min, max) {
+            return Math.floor((max - min) * Math.random() + min);
+        }
+
+        function Star(x, y) {
+            this.x = x;
+            this.y = y;
+            this.vx = (Math.random() - 0.5) * 3;
+            this.vy = (Math.random() - 0.5) * 3;
+            this.color = 'rgb(' + random(0, 256) + ',' + random(0, 256) + ',' + random(0, 256) + ')';
+            this.a = 1;
+            console.log(this.color);
+            this.draw();
+        }
+        Star.prototype = {
+            draw: function () {
+                ctx.beginPath();
+                ctx.fillStyle = this.color;
+                ctx.globalCompositeOperation = 'lighter'
+                ctx.globalAlpha = this.a;
+                ctx.arc(this.x, this.y, 30, 0, Math.PI * 2, false);
+                ctx.fill();
+                this.updata();
+            },
+            updata() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.a *= 0.98;
+            }
+        }
+        console.log(new Star(150, 200));
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+            starlist.forEach((item, i) => {
+                item.draw();
+                if (item.a < 0.05) {
+                    starlist.splice(i, 1);
+                }
+            })
+
+            requestAnimationFrame(render);
+        }
+        render();
+
     </script>
     <div style="text-align:center;">
-    
+
     </div>
 </body>
+
 </html>
