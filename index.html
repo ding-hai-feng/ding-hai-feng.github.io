@@ -18,69 +18,106 @@
         body {
             overflow: hidden;
         }
-
-        #canvas {
-            background-color: rgb(73, 73, 73);
-            width: 100%;
-            height: 100vh;
+        .bj{
             position: relative;
         }
-
-        h1 {
+        #canvas {
+            background-image: url('http://wx1.sinaimg.cn/large/81f8a509gy1fnjdvkkwgoj20zk0m8ak8.jpg');
+            /* background-color: rgb(73, 73, 73); */
+            background-repeat: no-repeat;
+            background-size: 100%, 100%;
+            width: 100%;
+            height: 100vh;
+        }
+        .donut { 
             position: absolute;
-            top: 500px;
+            top: 100px;
+            left: 100px;
+            width: 30px; 
+            height: 30px; 
+            border: 15px solid rgb(255, 255, 255); 
+            border-bottom-color: #00bef3;
+            border-left-color: #00bef3; 
+            border-radius: 50%; 
+            animation: donut 2s linear infinite;
+            }
+            @keyframes donut { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+            }
+
+        h1{
+            position: absolute;
+            top: 50px;
             left: 40%;
             font-size: 40px;
-            color: rgb(255, 217, 0);
-
-             /***** animation-name:动画名字，设置本元素要执行哪个动画 */
-             animation-name: move;
-            /***** 设置单次动画的持续时间 */
-            animation-duration: 10s;
-            /* 动画状态是否保留，设置为both可以保留动画结束时元素的样式 */
-            animation-fill-mode: both;
-            /***** 设置动画执行速率，默认为ease-in-out，匀速使用linear */
-            animation-timing-function: linear;
-            /* 表示动画延迟时间 */
-            animation-delay: 0s;
-            /* 设置动画方向 */
-            animation-direction: normal;
-            /***** 动画迭代（执行）次数，默认为1，设置infinite表示无限次 */
-            animation-iteration-count: infinite;
-
-            transform-style: preserve-3d;
+            color: rgb(255, 0, 0);
+            z-index: 10000000000000;
         }
+        p:nth-last-child(1){
+            position: absolute;
+            top: 150px;
+            left: 40%;
+            z-index: 10000000000000;
+            font-size: 30px;
+            font-family: "楷体";
+            color: red;
+        }
+        p:nth-last-child(2){
+            position: absolute;
+            top: 190px;
+            left: 40%;
+            z-index: 10000000000000;
+            font-size: 30px;
+            font-family: "楷体";
+            color: red;
+        }
+        p:nth-last-child(3){
+            position: absolute;
+            top: 230px;
+            left: 40%;
+            z-index: 10000000000000;
+            font-size: 30px;
+            font-family: "楷体";
+            color: red;
+        }
+        p:nth-last-child(4){
+            position: absolute;
+            top: 270px;
+            left: 40%;
+            z-index: 10000000000000;
+            font-size: 30px;
+            font-family: "楷体";
+            color: red;
+        }
+        p:nth-last-child(5){
+            position: absolute;
+            top: 310px;
+            left: 40%;
+            z-index: 10000000000000;
+            font-size: 30px;
+            font-family: "楷体";
+            color: red;
+        }
+       
 
         @keyframes move {
 
             /* 0%表示动画开始的关键帧 */
             0% {
-                background-color: salmon;
-                transform: translateZ(150px);
-                transform: translateY(150px);
-                transform-style: preserve-3d;
-                top:0px;
+               
             }
 
             10% {
-                background-color: rgb(241, 250, 114);
-                transform: translateZ(250px);
-                transform: translateY(100px);
-                transform-style: preserve-3d;
+               
             }
             20% {
-                background-color: rgb(241, 250, 114);
-                transform: translateZ(250px);
-                transform: translateY(100px);
-                transform-style: preserve-3d;
+               
             }
 
             /* 100%表示动画结束时的关键帧 */
             100% {
-                background-color: rgb(6, 248, 87);
-                transform: translateZ(150px);
-                transform: translateY(150px);
-                transform-style: preserve-3d;
+              
             }
         }
     </style>
@@ -88,9 +125,18 @@
     </head>
 
     <body>
-        <canvas id="canvas">
-        </canvas>
-        <h1>欢迎来到我的世界！</h1>
+        <div class="bj">
+             <div class="donut"></div>
+            <canvas id="canvas">
+            </canvas>
+            <h1>单身情况</h1>
+            <p>常一帆  &#x3000;  单身</p> 
+            <p>常宇 &#x3000;  单身</p>
+            <p>朱立强 &#x3000;  已经婚</p>
+            <p>王陪地 &#x3000;  单身</p>
+            <p>辛少贺 &#x3000;  曾经拥有</p>
+        </div>
+        
     </body>
 
 
@@ -131,7 +177,7 @@
                 ctx.fillStyle = this.color;
                 ctx.globalCompositeOperation = 'lighter'
                 ctx.globalAlpha = this.a;
-                ctx.arc(this.x, this.y, 30, 0, Math.PI * 2, false);
+                ctx.arc(this.x, this.y, 10, 0, Math.PI * 2, false);
                 ctx.fill();
                 this.updata();
             },
